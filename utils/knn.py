@@ -50,7 +50,8 @@ def predict(X, knn_clf=None, model_path=None, distance_threshold=0.6):
     X = [i for i in X['segment'] if i in leX.classes_]
     X = leX.transform(X)
     X = np.append(X[:X_max], [blank_label]*(X_max-len(X)))
-
+    print(X)
+    
     # Use the KNN model to find the first 5 best matches for the test face
     # 返回5个最佳结果
     closest_distances = knn_clf.kneighbors([X], n_neighbors=5)

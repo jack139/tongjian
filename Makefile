@@ -1,5 +1,5 @@
-PY = python3.6 -O -m compileall -b -q -f
-SRC = jiebazhc
+PY = python3.5 -O -m compileall -b -q -f
+SRC = jiebazhc utils predict.py train.py
 TARGETS = build
 
 all: clean $(TARGETS)
