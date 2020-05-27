@@ -1,5 +1,5 @@
 PY = python3.6 -O -m compileall -b -q -f
-SRC = jiebazhc jiebazhc2
+SRC = jiebazhc
 TARGETS = build
 
 all: clean $(TARGETS)
@@ -7,8 +7,12 @@ all: clean $(TARGETS)
 $(TARGETS):
 	@echo "Compiling ..."
 	@for target in $(SRC) ; do \
-		mkdir -p $(TARGETS)/$$target ; \
-		cp -r $$target/* $(TARGETS)/$$target/ ; \
+		if [ -d "$$target" ]; then \
+			mkdir -p $(TARGETS)/$$target ; \
+			cp -r $$target/* $(TARGETS)/$$target/ ; \
+		else \
+			cp $$target $(TARGETS)/ ; \
+		fi ; \
 	done
 	-$(PY) $(TARGETS)
 	@find $(TARGETS) -name '*.py' -delete
