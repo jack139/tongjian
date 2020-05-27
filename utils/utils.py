@@ -1,29 +1,10 @@
 # -*- coding: utf-8 -*-
-
-import jiebazhc as jieba
-import numpy as np
 import codecs
 import pandas as pd
-import matplotlib.pyplot as plt
-#from wordcloud import WordCloud
 
-file = codecs.open("data/001.txt", 'r', 'utf-8')
-content = file.read()
-file.close()
 
-segments = []
-segs = jieba.cut(content)
-
-for seg in segs:
-    if len(seg)>1:
-        segments.append(seg)
-
-segmentDF = pd.DataFrame({'segment':segments})
-
-# 停用词
+# 停用词字典
 stopwords = pd.read_csv("data/cn_stopwords.txt", encoding='utf8', index_col=False, quoting=3, sep="\n")
-segmentDF = segmentDF[~segmentDF.segment.isin(stopwords.stopword)]
-
 # 文言虚词
 wyStopWords = pd.Series([
     # 42 个文言虚词
@@ -41,12 +22,13 @@ wyStopWords = pd.Series([
     ' ', ''
 ]);
 
-segmentDF = segmentDF[~segmentDF.segment.isin(wyStopWords)]
+# 去除停用词
+def remove_stopwords(segmentDF):
+	segmentDF = segmentDF[~segmentDF.segment.isin(stopwords.stopword)]
+	segmentDF = segmentDF[~segmentDF.segment.isin(wyStopWords)]
+	return segmentDF
 
-#对词频进行统计。
-
-segStat = segmentDF.groupby(by=["segment"])["segment"].agg(count="count").reset_index().sort_values(by=['count'],ascending=False)
-
-print(segStat.head(100))
-
-
+def load_content(file_name):
+	with codecs.open(file_name, 'r', 'utf-8') as file:
+		content = file.read()
+	return content
