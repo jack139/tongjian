@@ -24,7 +24,7 @@ if __name__ == "__main__":
         model_name += '.clf'
 
     line_segs = jieba.cut(test_thing)
-    line_segs = [i for i in line_segs if len(i)>1]
+    line_segs = [i for i in line_segs if len(i)>0]
     line_df = pd.DataFrame({'segment':line_segs})
     line_df = utils.remove_stopwords(line_df)
 
@@ -34,5 +34,5 @@ if __name__ == "__main__":
     print('[Time taken: {!s}]'.format(datetime.now() - start_time))
 
     # Print results on the console
-    print(predictions)
+    print(predictions[0])
         

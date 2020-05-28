@@ -4,7 +4,7 @@ import pandas as pd
 
 
 # 停用词字典
-stopwords = pd.read_csv("data/cn_stopwords.txt", encoding='utf8', index_col=False, quoting=3, sep="\n")
+stopwords = pd.read_csv("utils/cn_stopwords.txt", encoding='utf8', index_col=False, quoting=3, sep="\n")
 # 文言虚词
 wyStopWords = pd.Series([
     # 42 个文言虚词

@@ -10,6 +10,7 @@ import pickle
 import numpy as np
 from . import prepare_data
 
+X_BLANK = 'blank'
 
 # 训练
 def train(train_file, model_save_path=None, n_neighbors=None, knn_algo='ball_tree', verbose=True):
@@ -46,19 +47,22 @@ def predict(X, knn_clf=None, model_path=None, distance_threshold=0.6):
             knn_clf, leX, ley, X_max = pickle.load(f)
 
     # 扩充数组长度
-    blank_label = leX.transform(['<blank>'])
+    blank_label = leX.transform([X_BLANK])
     X = [i for i in X['segment'] if i in leX.classes_]
     X = leX.transform(X)
     X = np.append(X[:X_max], [blank_label]*(X_max-len(X)))
-    print(X)
     
+    #print(X)
+
     # Use the KNN model to find the first 5 best matches for the test face
     # 返回5个最佳结果
-    closest_distances = knn_clf.kneighbors([X], n_neighbors=5)
+    closest_distances = knn_clf.kneighbors([X], n_neighbors=3)
 
     #print(closest_distances)
 
     # 将阈值范围内的结果均返回
-    l = knn_clf.classes_[knn_clf._y[closest_distances[1][0][0]]]
-    return ley.inverse_transform([l])
+    l = []
+    for i in range(len(closest_distances[1][0])):
+        l.append(knn_clf.classes_[knn_clf._y[closest_distances[1][0][i]]])
+    return ley.inverse_transform(l).tolist()
 
