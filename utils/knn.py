@@ -8,7 +8,8 @@ import os
 import os.path
 import pickle
 import numpy as np
-from . import prepare_data
+#from . import prepare_data
+from . import prepare_data_ts as prepare_data
 
 X_BLANK = 'blank'
 

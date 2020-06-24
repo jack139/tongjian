@@ -24,11 +24,16 @@ wyStopWords = pd.Series([
 
 # 去除停用词
 def remove_stopwords(segmentDF):
-	segmentDF = segmentDF[~segmentDF.segment.isin(stopwords.stopword)]
-	segmentDF = segmentDF[~segmentDF.segment.isin(wyStopWords)]
-	return segmentDF
+    segmentDF = segmentDF[~segmentDF.segment.isin(stopwords.stopword)]
+    segmentDF = segmentDF[~segmentDF.segment.isin(wyStopWords)]
+    return segmentDF
 
 def load_content(file_name):
-	with codecs.open(file_name, 'r', 'utf-8') as file:
-		content = file.read()
-	return content
+    with codecs.open(file_name, 'r', 'utf-8') as file:
+        content = file.read()
+    return content
+
+def load_content_lines(file_name):
+    with codecs.open(file_name, 'r', 'utf-8') as file:
+        content = file.readlines()
+    return content
