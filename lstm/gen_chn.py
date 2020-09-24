@@ -3,7 +3,7 @@
 
 import sys, random, re, pickle
 import numpy as np
-import jiebazhc as jieba
+import jieba
 
 
 # Length of extracted character sequences
@@ -11,7 +11,7 @@ MAXLEN = 10
 
 def load_data(path, model_h5=None):
     content = open(path).read().lower()
-    content = re.sub(r'[\n|#|0-9|：|（|）|“|”|《|》|‘|’]', '', content)
+    content = re.sub(r'[\n|#|0-9|：|（|）|“|”|《|》|‘|’|\u3000|…|.|"|—|-]', '', content)
     text = [i for i in jieba.cut(content) if len(i)>0]
     print('Corpus length:', len(text))
 
