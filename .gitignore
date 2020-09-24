@@ -20,3 +20,5 @@ lib64/
 
 build/
 data/
+*.dat
+*.h5
